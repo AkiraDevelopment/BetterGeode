@@ -29,8 +29,10 @@
     <input type="text" id="bginput"></input>
     <label>Open My Projects window on startup <input type="checkbox" id="projinput"></input></label>
     <label>Blur Amount (px) <input type="number" id="blurinput" min="0" max="40" value="8"></input></label>
-    <label>Window Background Color <input type="color" id="winbginput"> <input type="range" id="alpha" onchange="updateColorAlpha(this.value);" min="0" max="1" step="0.01" value="0.8"></label>
+    <label>Window Background Color <input type="color" id="winbginput"> <input type="range" id="alpha" min="0" max="1" step="0.01" value="0.8"></label>
     <h2>Reload the page to save changes</h2>
+    <button id="exportButton">Export Preset</button>
+    <button id="importButton">Import Preset</button>
     <script src="bettergeode.js"></script>
   </body>
 </html>
