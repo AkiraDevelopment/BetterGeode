@@ -8,31 +8,35 @@ function hex_to_RGB(hex) {
     };
 }
 
-window.onload = () => {  
+window.onload = async () => {  
     console.log('BetterGeode Loaded!');
-    chrome.storage.sync.get('image', ({ image }) => {
-        console.log(`Loaded Image: ${image ? image : 'None set'}`);
-        if (image) document.getElementById('app').style.backgroundImage = `url('${image}')`
-    });
-    chrome.storage.sync.get('projectsonload', ({ projectsonload }) => {
-        console.log(`Open My Projects window on load: ${projectsonload ? projectsonload : false}`);
-        if (projectsonload) document.getElementsByClassName('contextmenu')[0].getElementsByClassName('menu-option')[0].click();
-    });
-    chrome.storage.sync.get('blur', ({ blur }) => {
-        console.log(`Custom Blur: ${blur ? blur : 8}`);
-        if (blur && blur != 8) {
-            document.documentElement.style.setProperty('--blur', `blur(${blur}px)`);
-            document.documentElement.style.setProperty('--context-menu-blur', `blur(${blur}px)`);
-        }
-    });
-    chrome.storage.sync.get('winbg', ({ winbg }) => {
-        console.log(`Window Background: ${winbg ? winbg : '#05090E'}`);
-        chrome.storage.sync.get('winopacity', ({ winopacity }) => {
-            console.log(`Window Opacity: ${winopacity ? winopacity : 0.8}`);
-            const rgb = winbg ? hex_to_RGB(winbg) : { r: 5, g: 9, b: 14 }
-            document.documentElement.style.setProperty('--window-bg', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${winopacity ? winopacity : 0.8})`);
-        });
-    });
+
+    const { image } = await chrome.storage.sync.get('image');
+    if (image) {
+        document.getElementById('app').style.backgroundImage = `url('${image}')`
+        console.log(`Loaded Image: ${image}`);
+    }
+
+    const { projectsonload } = await chrome.storage.sync.get('projectsonload')
+    console.log(`Open My Projects window on load: ${projectsonload ? projectsonload : false}`);
+    if (projectsonload) document.getElementsByClassName('contextmenu')[0].getElementsByClassName('menu-option')[0].click();
+
+    const { blur } = await chrome.storage.sync.get('blur')
+    if (blur && blur != 8) {
+        document.documentElement.style.setProperty('--blur', `blur(${blur}px)`);
+        document.documentElement.style.setProperty('--context-menu-blur', `blur(${blur}px)`);
+        console.log(`Custom Blur: ${blur}`);
+    }
+
+    const { winbg } = await chrome.storage.sync.get('winbg')
+    console.log(`Window Background: ${winbg ? winbg : '#05090E'}`);
+
+    const { winopacity } = await chrome.storage.sync.get('winopacity')
+    console.log(`Window Opacity: ${winopacity ? winopacity : 0.8}`);
+
+    const rgb = winbg ? hex_to_RGB(winbg) : { r: 5, g: 9, b: 14 }
+    document.documentElement.style.setProperty('--window-bg', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${winopacity ? winopacity : 0.8})`);
+
     document.getElementsByClassName('taskbar')[0].style.background = '#00000000';
     document.getElementsByClassName('taskbar')[0].previousSibling.style.position = 'absolute';
     document.getElementsByClassName('taskbar')[0].previousSibling.style.top = '0';

@@ -1,9 +1,12 @@
 chrome.declarativeContent.onPageChanged.removeRules(null, () => {
   chrome.declarativeContent.onPageChanged.addRules([{
-    conditions: [new chrome.declarativeContent.PageStateMatcher({
-      pageUrl: {hostEquals: 'panel.geode.host'},
-    })
+    conditions: [
+      new chrome.declarativeContent.PageStateMatcher({
+        pageUrl: {hostEquals: 'panel.geode.host'},
+      })
     ],
-      actions: [new chrome.declarativeContent.ShowPageAction()]
+    actions: [
+      new chrome.declarativeContent.ShowPageAction()
+    ]
   }]);
 });
