@@ -8,6 +8,26 @@ function hex_to_RGB(hex) {
     };
 }
 
+function waitForElm(selector) {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector));
+        }
+
+        const observer = new MutationObserver(mutations => {
+            if (document.querySelector(selector)) {
+                resolve(document.querySelector(selector));
+                observer.disconnect();
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+}
+
 window.onload = async () => {  
     console.log('BetterGeode Loaded!');
 
@@ -36,10 +56,12 @@ window.onload = async () => {
 
     const rgb = winbg ? hex_to_RGB(winbg) : { r: 5, g: 9, b: 14 }
     document.documentElement.style.setProperty('--window-bg', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${winopacity ? winopacity : 0.8})`);
+    document.documentElement.style.setProperty('--context-menu-bg', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${winopacity ? winopacity : 0.8})`);
 
-    document.getElementsByClassName('taskbar')[0].style.background = '#00000000';
-    document.getElementsByClassName('taskbar')[0].previousSibling.style.position = 'absolute';
-    document.getElementsByClassName('taskbar')[0].previousSibling.style.top = '0';
-    document.getElementsByClassName('taskbar')[0].previousSibling.style.backdropFilter = 'var(--blur)';
-    document.getElementsByClassName('taskbar')[0].previousSibling.className = 'taskbar animated faster slideInLeft';
+    const elm = await waitForElm('.taskbar');
+    elm.style.background = '#00000000';
+    elm.previousSibling.style.position = 'absolute';
+    elm.previousSibling.style.top = '0';
+    elm.previousSibling.style.backdropFilter = 'var(--blur)';
+    elm.previousSibling.className = 'taskbar animated faster slideInLeft';
 }
