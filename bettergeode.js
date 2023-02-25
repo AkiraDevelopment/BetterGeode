@@ -1,49 +1,42 @@
-var bgInput = document.getElementById('bginput');
-var projInput = document.getElementById('projinput');
-var blurInput = document.getElementById('blurinput');
-var winbgInput = document.getElementById('winbginput');
-var alphaInput = document.getElementById('alpha');
-var importButton = document.getElementById("importButton");
-var exportButton = document.getElementById("exportButton");
+const bgInput = document.getElementById('bginput');
+const projInput = document.getElementById('projinput');
+const blurInput = document.getElementById('blurinput');
+const winbgInput = document.getElementById('winbginput');
+const alphaInput = document.getElementById('alpha');
+const importButton = document.getElementById("importButton");
+const exportButton = document.getElementById("exportButton");
 
-const { image } = await chrome.storage.sync.get('image');
-bgInput.value = image ? image : '';
+const { image, projectsonload, blur, winbg, winopacity } = await chrome.storage.sync.get(['image', 'projectsonload', 'blur', 'winbg', 'winopacity']);
 
-const { projectsonload } = await chrome.storage.sync.get('projectsonload');
-projInput.checked = projectsonload ? projectsonload : false;
-
-const { blur } = await chrome.storage.sync.get('blur');
-blurInput.value = blur ? blur : 8;
-
-const { winbg } = await chrome.storage.sync.get('winbg');
-winbgInput.value = winbg ? winbg : '#05090E';
-
-const { winopacity } = await chrome.storage.sync.get('winopacity');
-alphaInput.value = winopacity ? winopacity : 0.8;
+bgInput.value = image ?? '';
+projInput.checked = projectsonload ?? false;
+blurInput.value = blur ?? 8;
+winbgInput.value = winbg ?? '#05090E';
+alphaInput.value = winopacity ?? 0.8;
 
 bgInput.oninput = async event => {
   await chrome.storage.sync.set({ image: event.target.value })
-  console.log('The image value is ' + event.target.value);
+  console.log(`Set image to: ${event.target.value}`);
 }
 
 projInput.onchange = async event => {
   await chrome.storage.sync.set({ projectsonload: event.target.checked })
-  console.log('The projectsonload value is ' + event.target.checked);
+  console.log(`Set projectsonload to: ${event.target.checked}`);
 }
 
 blurInput.onchange = async event => {
   await chrome.storage.sync.set({ blur: event.target.value })
-  console.log('The blur value is ' + event.target.value);
+  console.log(`Set blur to: ${event.target.value}`);
 }
 
 winbgInput.oninput = async event => {
   await chrome.storage.sync.set({ winbg: event.target.value });
-  console.log('The window background color is ' + event.target.value);
+  console.log(`Set winbg to: ${event.target.value}`);
 }
 
 alphaInput.oninput = async event => {
   await chrome.storage.sync.set({ winopacity: event.target.value });
-  console.log('The window background opacity is ' + event.target.value);
+  console.log(`Set winopacity to: ${event.target.value}`);
 }
 
 function importSettings() {
@@ -60,20 +53,13 @@ function importSettings() {
 
       console.log('Settings imported from JSON!');
 
-      await chrome.storage.sync.set({ image })
-      console.log('The image value is ' + image);
+      await chrome.storage.sync.set({ image, projectsonload, blur, winbg, winopacity })
 
-      await chrome.storage.sync.set({ projectsonload })
-      console.log('The projectsonload value is ' + projectsonload);
-    
-      await chrome.storage.sync.set({ blur })
-      console.log('The blur value is ' + blur);
-    
-      await chrome.storage.sync.set({ winbg })
-      console.log('The window background color is ' + winbg);
-
-      await chrome.storage.sync.set({ winopacity });
-      console.log('The window background opacity is ' + winopacity ? winopacity : 0.8);
+      console.log(`Set image to: ${image}`);
+      console.log(`Set projectsonload to: ${projectsonload}`);
+      console.log(`Set blur to: ${blur}`);
+      console.log(`Set winbg to: ${winbg}`);
+      console.log(`Set winopacity to: ${winopacity}`);
     }
   }
   input.click();

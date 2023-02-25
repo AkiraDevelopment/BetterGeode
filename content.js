@@ -31,27 +31,23 @@ function waitForElm(selector) {
 window.onload = async () => {  
     console.log('BetterGeode Loaded!');
 
-    const { image } = await chrome.storage.sync.get('image');
+    const { image, projectsonload, blur, winbg, winopacity } = await chrome.storage.sync.get(['image', 'projectsonload', 'blur', 'winbg', 'winopacity']);
+
     if (image) {
         document.getElementById('app').style.backgroundImage = `url('${image}')`
         console.log(`Loaded Image: ${image}`);
     }
 
-    const { projectsonload } = await chrome.storage.sync.get('projectsonload')
     console.log(`Open My Projects window on load: ${projectsonload ? projectsonload : false}`);
     if (projectsonload) document.getElementsByClassName('contextmenu')[0].getElementsByClassName('menu-option')[0].click();
 
-    const { blur } = await chrome.storage.sync.get('blur')
     if (blur && blur != 8) {
         document.documentElement.style.setProperty('--blur', `blur(${blur}px)`);
         document.documentElement.style.setProperty('--context-menu-blur', `blur(${blur}px)`);
         console.log(`Custom Blur: ${blur}`);
     }
 
-    const { winbg } = await chrome.storage.sync.get('winbg')
     console.log(`Window Background: ${winbg ? winbg : '#05090E'}`);
-
-    const { winopacity } = await chrome.storage.sync.get('winopacity')
     console.log(`Window Opacity: ${winopacity ? winopacity : 0.8}`);
 
     const rgb = winbg ? hex_to_RGB(winbg) : { r: 5, g: 9, b: 14 }
@@ -60,6 +56,7 @@ window.onload = async () => {
 
     const elm = await waitForElm('.taskbar');
     elm.style.background = '#00000000';
+    if (!elm.previousSibling) return;
     elm.previousSibling.style.position = 'absolute';
     elm.previousSibling.style.top = '0';
     elm.previousSibling.style.backdropFilter = 'var(--blur)';
