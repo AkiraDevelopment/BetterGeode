@@ -29,7 +29,7 @@ function waitForElm(selector) {
 }
 
 window.onload = async () => {  
-    console.log('BetterGeode Loaded!');
+    console.log('BetterGeode has been loaded!');
 
     const { image, projectsonload, blur, winbg, winopacity } = await chrome.storage.sync.get(['image', 'projectsonload', 'blur', 'winbg', 'winopacity']);
 
