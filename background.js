@@ -12,3 +12,4 @@ chrome.declarativeContent.onPageChanged.removeRules(null, () => {
     ]
   }]);
 });
+from lambda:
