@@ -1,8 +1,10 @@
 const bgInput = document.getElementById('bginput');
 const projInput = document.getElementById('projinput');
 const blurInput = document.getElementById('blurinput');
+const blurInputText = document.getElementById('blurinputtext');
 const winbgInput = document.getElementById('winbginput');
 const alphaInput = document.getElementById('alpha');
+const alphaInputText = document.getElementById('alphainputtext');
 const importButton = document.getElementById("importButton");
 const exportButton = document.getElementById("exportButton");
 
@@ -11,31 +13,43 @@ const { image, projectsonload, blur, winbg, winopacity } = await chrome.storage.
 bgInput.value = image ?? '';
 projInput.checked = projectsonload ?? false;
 blurInput.value = blur ?? 8;
+blurInputText.innerText = blur ?? 8;
 winbgInput.value = winbg ?? '#05090E';
 alphaInput.value = winopacity ?? 0.8;
+alphaInputText.innerText = Math.round((winopacity ?? 0.8) * 100);
 
 bgInput.oninput = async event => {
-  await chrome.storage.sync.set({ image: event.target.value })
+  await chrome.storage.sync.set({ image: event.target.value });
   console.log(`Set image to: ${event.target.value}`);
 }
 
 projInput.onchange = async event => {
-  await chrome.storage.sync.set({ projectsonload: event.target.checked })
+  await chrome.storage.sync.set({ projectsonload: event.target.checked });
   console.log(`Set projectsonload to: ${event.target.checked}`);
 }
 
+blurInput.oninput = async event => {
+  blurInputText.innerText = event.target.value;
+}
+
 blurInput.onchange = async event => {
-  await chrome.storage.sync.set({ blur: event.target.value })
+  await chrome.storage.sync.set({ blur: event.target.value });
+  blurInputText.innerText = event.target.value;
   console.log(`Set blur to: ${event.target.value}`);
 }
 
-winbgInput.oninput = async event => {
+winbgInput.onchange = async event => {
   await chrome.storage.sync.set({ winbg: event.target.value });
   console.log(`Set winbg to: ${event.target.value}`);
 }
 
 alphaInput.oninput = async event => {
+  alphaInputText.innerText = Math.round(event.target.value * 100);
+}
+
+alphaInput.onchange = async event => {
   await chrome.storage.sync.set({ winopacity: event.target.value });
+  alphaInputText.innerText = Math.round(event.target.value * 100);
   console.log(`Set winopacity to: ${event.target.value}`);
 }
 

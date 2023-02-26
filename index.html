@@ -4,17 +4,59 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>BETTER GEODE</h1>
-    <label>Background Image</label>
-    <input type="text" id="bginput"></input>
-    <label>Open My Projects on startup <input type="checkbox" id="projinput"></input></label>
-    <label>Blur Intensity (px) <input type="number" id="blurinput" min="0" max="40" value="8"></input></label>
-    <label>Window Color <input type="color" id="winbginput"> <input type="range" id="alpha" min="0" max="1" step="0.01" value="0.8"></label>
-    <h2>Reload page to save changes</h2>
-    <div>
-      <button id="exportButton">Export Preset</button>
-      <button id="importButton">Import Preset</button>
-    </div>
+    <h1>
+      BETTER GEODE
+    </h1>
+    <label for="bginput" style="flex-direction: column; gap: 15px;">
+      <span>BACKGROUND IMAGE</span>
+      <input style="width: 80%;" type="text" id="bginput">
+    </label>
+    <label for="projinput">
+      FORCE PROJECTS WINDOW ON STARTUP
+      <input type="checkbox" id="projinput">
+    </label>
+    <label for="blurinput">
+      BLUR INTENSITY
+      <input type="range" id="blurinput" min="0" max="40" value="8">
+      <span id="blurinputtext">8</span>px
+    </label>
+    <label for="winbginput">
+      WINDOW COLOR
+      <input type="color" id="winbginput">
+    </label>
+    <label for="alpha">
+      WINDOW OPACITY
+      <input type="range" id="alpha" min="0" max="1" step="0.01" value="0.8">
+      <span id="alphainputtext">80</span>%
+    </label>
+    <label>
+      <button id="exportButton">
+        EXPORT PRESET
+      </button>
+      <button id="importButton">
+        IMPORT PRESET
+      </button>
+    </label>
+    <h2>
+      RELOAD TO APPLY CHANGES!
+    </h2>
+    <h3>
+      CONTRIBUTORS
+      <a href="https://github.com/saboooor">
+        - saboooor
+      </a>
+      <a href="https://github.com/Oli-idk">
+        - Oli-idk
+      </a>
+      <a href="https://github.com/leonm-cloud">
+        - leonm-cloud
+      </a>
+    </h3>
+    <h3>
+      <a href="https://github.com/AkiraDevelopment">
+        AKIRADEVELOPMENT
+      </a>
+    </h3>
     <script src="bettergeode.js" type="module"></script>
   </body>
 </html>
