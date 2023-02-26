@@ -1,7 +1,7 @@
 {
     "name": "BetterGeode",
     "description": "Customize the Geode Panel even more!",
-    "version": "1",
+    "version": "2",
     "manifest_version": 3,
     "author": "saboor",
     "background": {
